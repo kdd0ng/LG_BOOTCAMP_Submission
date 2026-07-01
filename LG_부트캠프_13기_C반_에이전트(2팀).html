@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LG 부트캠프 13기 C반 2팀 · 프로젝트 평가 리포트 (Squeeze_PPT2Json)</title>
+<style>
+  :root{
+    --bg:#0f172a; --card:#ffffff; --muted:#64748b; --line:#e2e8f0;
+    --ok:#16a34a; --okbg:#dcfce7; --warn:#d97706; --warnbg:#fef3c7;
+    --bad:#dc2626; --badbg:#fee2e2; --na:#6b7280; --nabg:#f1f5f9;
+    --accent:#2563eb; --accentbg:#eff6ff;
+  }
+  *{box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+    margin:0;background:#f8fafc;color:#0f172a;line-height:1.6;font-size:15px}
+  header.top{background:linear-gradient(135deg,#1e293b,#0f172a);color:#fff;padding:32px 40px}
+  header.top h1{margin:0 0 6px;font-size:24px}
+  header.top .sub{color:#cbd5e1;font-size:14px}
+  .wrap{max-width:1120px;margin:0 auto;padding:24px 20px 80px}
+  section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px 28px;margin:20px 0;
+    box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  h2{font-size:19px;margin:0 0 4px;padding-bottom:10px;border-bottom:2px solid var(--accent);display:inline-block}
+  .secnum{color:var(--accent);font-weight:700}
+  h3{font-size:16px;margin:22px 0 8px}
+  h4{font-size:14px;margin:16px 0 6px;color:#334155}
+  p.note{color:var(--muted);font-size:13.5px;margin:6px 0}
+  table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13.5px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#f1f5f9;font-weight:600}
+  tbody tr:nth-child(even){background:#fafcff}
+  code{background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:12.5px;
+    font-family:"SFMono-Regular",Consolas,monospace}
+  .badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+  .b-ok{background:var(--okbg);color:var(--ok)}
+  .b-warn{background:var(--warnbg);color:var(--warn)}
+  .b-bad{background:var(--badbg);color:var(--bad)}
+  .b-na{background:var(--nabg);color:var(--na)}
+  .b-info{background:var(--accentbg);color:var(--accent)}
+  .kpi{display:flex;flex-wrap:wrap;gap:14px;margin:16px 0}
+  .kpi .box{flex:1 1 150px;background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .kpi .box .n{font-size:22px;font-weight:700}
+  .kpi .box .l{font-size:12.5px;color:var(--muted)}
+  .evi{font-size:12px;color:#475569}
+  ul.tight{margin:6px 0;padding-left:20px}
+  ul.tight li{margin:3px 0}
+  .callout{background:var(--accentbg);border-left:4px solid var(--accent);padding:10px 14px;border-radius:6px;margin:12px 0;font-size:13.5px}
+  .callout.warn{background:var(--warnbg);border-left-color:var(--warn)}
+  .scoreform{background:#fbfdff;border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin:14px 0}
+  .scoreform blockquote{margin:6px 0;padding:6px 12px;border-left:3px solid #cbd5e1;color:#334155;font-size:13px;background:#f8fafc}
+  .blank{display:inline-block;min-width:44px;border-bottom:1px solid #94a3b8;text-align:center}
+  footer{color:var(--muted);font-size:12.5px;text-align:center;padding:20px}
+  .toc{columns:2;font-size:13.5px}
+  .toc a{color:var(--accent);text-decoration:none}
+  .toc a:hover{text-decoration:underline}
+  .mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:12px}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>프로젝트 평가 리포트 — Squeeze_PPT2Json</h1>
+  <div class="sub">LG 부트캠프 13기 · <b>C반 2팀</b> · 평가 기준: <code>project_assessment_agent_v1.0.md</code></div>
+  <div class="sub">분석 일시: 2026-07-01 · 평가 단위: 팀 프로젝트 산출물 · 구성: 2개 프로그램(backend / frontend)</div>
+</header>
+
+<div class="wrap">
+
+<div class="callout">
+  <b>이 리포트의 원칙 (정의서 3장)</b> — 자동 판정은 <b>검증 가능한 사실</b>에만 근거하며, 각 결론에 파일경로·테스트명·실행로그·커밋 등 근거를 붙였습니다.
+  확인 불가 항목은 추측 없이 <span class="badge b-na">확인 불가</span>로 표기하고 이유를 명시했습니다.
+  난이도·창의성 등 주관 항목은 판단하지 않으며, 비기능 요소는 8번 <b>강사 평가 폼</b>만 빈칸으로 생성했습니다.
+</div>
+
+<div class="toc">
+  <b>목차</b><br>
+  <a href="#s1">1. 요약</a> · <a href="#s2">2. 산출물 점검</a> · <a href="#s3">3. 기능 구현 매트릭스</a> ·
+  <a href="#s4">4. 테스트 결과</a> · <a href="#s5">5. DevOps·실행 가능성</a> · <a href="#s6">6. 시연 확인표</a> ·
+  <a href="#s7">7. Git 협업 지표</a> · <a href="#s8">8. 비기능 요소 강사 평가 폼</a> · <a href="#s9">9. 확인 불가 / 한계</a>
+</div>
+
+<!-- ============ 1. 요약 ============ -->
+<section id="s1">
+  <h2><span class="secnum">1.</span> 요약</h2>
+  <table>
+    <tr><th style="width:160px">반 / 팀</th><td>LG 부트캠프 13기 C반 2팀</td></tr>
+    <tr><th>프로젝트명</th><td>Squeeze_PPT2Json — PowerPoint(.pptx) 보고서를 구조화 JSON·Excel로 변환하는 LLM 기반 파이프라인 + 웹 UI</td></tr>
+    <tr><th>프로그램 구성</th><td>2개 — <code>program_backend</code>(파이프라인), <code>program_frontend</code>(웹 업로드/변환/조회)</td></tr>
+    <tr><th>요구사항 수</th><td>15개 (R-01 ~ R-15)</td></tr>
+    <tr><th>분석 기준 문서</th><td><code>project_assessment_agent_v1.0.md</code> (평가 규칙, 산출물 아님) / <code>project_output_guide_v1.2.md</code></td></tr>
+  </table>
+
+  <div class="kpi">
+    <div class="box"><div class="n" style="color:var(--ok)">15 / 15</div><div class="l">기능 요구사항 구현됨</div></div>
+    <div class="box"><div class="n" style="color:var(--ok)">34 / 34</div><div class="l">테스트 통과 <span class="evi">(에이전트 직접 실행)</span></div></div>
+    <div class="box"><div class="n" style="color:var(--ok)">15 / 15</div><div class="l">요구사항별 테스트 존재</div></div>
+    <div class="box"><div class="n" style="color:var(--ok)">7~8 / 8</div><div class="l">DevOps 기준 충족 <span class="evi">(프로그램별)</span></div></div>
+    <div class="box"><div class="n" style="color:var(--accent)">33</div><div class="l">Git 커밋 (3인)</div></div>
+  </div>
+
+  <h4>핵심 결과 한눈에</h4>
+  <ul class="tight">
+    <li><b>기능 구현</b>: 요구사항 R-01~R-15 전부 소스코드에 대응 구현 확인 (프로그램 단위 매핑, 아래 §3).</li>
+    <li><b>테스트</b>: 에이전트가 <code>uv</code>로 환경을 구성해 <b>직접 실행</b> → backend 16개·frontend 18개 <b>모두 통과</b>. 제출물의 <code>test-results/</code> 첨부 로그(동일 34 통과)와 일치.</li>
+    <li><b>실행 가능성</b>: <code>requirements.txt</code> 설치, 프론트엔드 <code>npm run build</code>, 웹 백엔드 <code>uvicorn</code> 기동을 <b>실측 성공</b>. 백엔드 전체 LLM E2E(<code>run.sh</code>)는 API 키 미제공으로 <span class="badge b-na">확인 불가</span>(비-LLM 단계는 테스트 내 실제 실행 성공).</li>
+    <li><b>협업</b>: 3명 기여(15/11/7 커밋), PR #1~#5 머지 기록 존재 → 협업 방식 운영 신호 확인(사실 보고, 최종 판단은 평가자).</li>
+  </ul>
+</section>
+
+<!-- ============ 2. 산출물 점검 ============ -->
+<section id="s2">
+  <h2><span class="secnum">2.</span> 산출물 점검 결과</h2>
+  <p class="note">정의서 4장 필수 산출물 기준. <code>에이전트(2팀).html</code>은 에이전트 생성 출력이므로 점검 대상에서 제외.
+  경로 기준: <span class="mono">/data001/hyunseo.kim/project_agent/</span> (요구사항서·보고서·포스터·영상·zip) 및 zip 해제 워크스페이스 <span class="mono">Squeeze_PPT2Json/</span>.</p>
+  <table>
+    <thead><tr><th style="width:280px">필수 산출물</th><th style="width:110px">상태</th><th>근거 (파일)</th></tr></thead>
+    <tbody>
+      <tr><td>요구사항 명세서 (.md)</td><td><span class="badge b-ok">충족</span></td><td><code>LG_부트캠프_13기_C반_요구사항_명세서(2팀).md</code></td></tr>
+      <tr><td>결과보고서 — PDF</td><td><span class="badge b-ok">충족</span></td><td><code>LG_부트캠프_13기_C반_결과보고서(2팀).pdf</code> (1.65 MB)</td></tr>
+      <tr><td>결과보고서 — PPTX</td><td><span class="badge b-ok">충족</span></td><td><code>LG_부트캠프_13기_C반_결과보고서(2팀).pptx</code> (9.07 MB)</td></tr>
+      <tr><td>포스터 — PDF</td><td><span class="badge b-ok">충족</span></td><td><code>LG_부트캠프_13기_C반_포스터(2팀).pdf</code> (0.59 MB)</td></tr>
+      <tr><td>포스터 — PPTX</td><td><span class="badge b-ok">충족</span></td><td><code>LG_부트캠프_13기_C반_포스터(2팀).pptx</code> (0.21 MB)</td></tr>
+      <tr><td>결과파일 (.zip) — 소스·테스트·실행자원</td><td><span class="badge b-ok">충족</span></td><td><code>LG_부트캠프_13기_C반_결과파일(2팀).zip</code> (4.6 MB) → <code>src/</code>·<code>tests/</code>·<code>test-results/</code>·<code>README.md</code>·<code>RUN.md</code>·<code>requirements.txt</code> 포함</td></tr>
+      <tr><td>시연영상 (.mp4)</td><td><span class="badge b-ok">충족</span></td><td><code>LG_부트캠프_13기_C반_시연영상(2팀).mp4</code> (6.79 MB)</td></tr>
+    </tbody>
+  </table>
+
+  <h4>zip 내부 형식·정합성 점검 (정의서 4장·6.1)</h4>
+  <table>
+    <thead><tr><th style="width:260px">점검 항목</th><th style="width:110px">상태</th><th>근거</th></tr></thead>
+    <tbody>
+      <tr><td>다중 프로그램 분리 구조</td><td><span class="badge b-ok">충족</span></td><td><code>src/</code>, <code>tests/</code>, <code>test-results/</code> 모두 <code>program_backend</code>·<code>program_frontend</code> 2개로 분리</td></tr>
+      <tr><td>디렉토리 정합성 (src↔tests↔test-results)</td><td><span class="badge b-ok">충족</span></td><td>세 디렉토리 모두 동일하게 2개 프로그램 하위 구성 → 불일치 없음</td></tr>
+      <tr><td>Git 히스토리 포함</td><td><span class="badge b-warn">부분</span></td><td><code>.git/</code> 디렉토리는 없고, 내보낸 <code>git_log.txt</code>(33 커밋) 형태로 첨부 → 커밋 로그 기반 협업 분석은 가능(§7). 원본 저장소 메타데이터(작성자 이메일 등)는 부재</td></tr>
+    </tbody>
+  </table>
+  <p class="note">※ 형식 불일치/누락 없음. 단 Git은 저장소가 아닌 로그 텍스트로 제출되어 있어 아래 §7·§9에 한계로 명시.</p>
+</section>
+
+<!-- ============ 3. 기능 구현 매트릭스 ============ -->
+<section id="s3">
+  <h2><span class="secnum">3.</span> 기능 구현 매트릭스</h2>
+  <p class="note">정의서 5.1·6.1. 각 요구사항은 <b>전체 프로그램을 통틀어</b> 구현 여부를 확인하고 발견 위치(프로그램)를 근거로 표기. 판정: 구현됨 / 부분 구현 / 미구현 / 확인 불가.</p>
+  <table>
+    <thead><tr>
+      <th style="width:52px">ID</th><th style="width:230px">요구사항(요약)</th><th style="width:88px">구현</th>
+      <th style="width:64px">테스트</th><th style="width:70px">통과</th><th>구현 근거 (파일 / 함수 / 산출물)</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>R-01</td><td>raw 입력 PPTX 인식·처리</td><td><span class="badge b-ok">구현됨</span></td><td>있음</td><td><span class="badge b-ok">통과</span></td>
+        <td>backend <code>1_1_preprocess_refine_and_mask_table.py</code> (<code>--data_path=src/data/raw</code>). 입력 4개 pptx 존재. 테스트 <code>TestR01_R02::test_input_pptx_files_exist</code></td></tr>
+      <tr><td>R-02</td><td>복잡 표 감지·placeholder 마스킹</td><td><span class="badge b-ok">구현됨</span></td><td>있음</td><td><span class="badge b-ok">통과</span></td>
+        <td>backend <code>refine_and_mask_compelx_table.py</code> → <code>create_sub_pptx_per_table</code>, <code>1_1...py --mask_table</code>. 테스트 <code>test_masked_pptx_created</code>(마스킹 pptx 수 == 입력 수)</td></tr>
+      <tr><td>R-03</td><td>슬라이드 텍스트·이미지·표 구조 JSON 추출</td><td><span class="badge b-ok">구현됨</span></td><td>있음</td><td><span class="badge b-ok">통과</span></td>
+        <td>backend <code>1_2_preprocess_raw_pptx_file.py</code> → <code>all_content.json</code>·파일별 <code>extracted_content.json</code>. 테스트 <code>TestR03::test_all_content_json_created</code></td></tr>
+      <tr><td>R-04</td><td>LLM key-value 자동 추출</td><td><span class="badge b-ok">구현됨</span></td><td>있음</td><td><span class="badge b-ok">통과</span></td>
+        <td>backend <code>2_main_iterative_refine.py</code> + <code>ai_agents/{generator,parser,wrapper}.py</code>. 산출물 <code>results/output_1_2_5_7_8_11_12_13/kv_results_*.json</code>(16개). 테스트 <code>TestR04_R05::test_kv_results_*</code> (사전 실행 결과 기반 구조 검증)</td></tr>
+      <tr><td>R-05</td><td>self-refine 반복 품질 개선</td><td><span class="badge b-ok">구현됨</span></td><td>있음</td><td><span class="badge b-ok">통과</span></td>
+        <td>backend <code>2_main_iterative_refine.py</code> (<code>--max_refine_iters</code>). 산출물 <code>kv_results_*_iter1~3.json</code> 존재. 테스트 <code>test_refine_iter_files_exist</code></td></tr>
+      <tr><td>R-06</td><td>nested 표 key row/col 식별→계층 JSON (VQA)</td><td><span class="badge b-ok">구현됨</span></td><td>있음</td><td><span class="badge b-ok">통과</span></td>
+        <td>backend <code>3_main_vqa.py</code> + <code>vqa_utils/tabletree.py</code>. 산출물 <code>results/nested_tables/{file}/{표자리N}/table.json</code>(4개). 테스트 <code>TestR06::test_table_json_*</code></td></tr>
+      <tr><td>R-07</td><td>본문 KV + 표 JSON 통합 병합</td><td><span class="badge b-ok">구현됨</span></td><td>있음</td><td><span class="badge b-ok">통과</span></td>
+        <td>backend <code>4_merge_ppt_and_table.py</code> + <code>merge_handler/</code>. 산출물 <code>results/merged_json/*.json</code>(4). 테스트 <code>TestR07::test_merge_produces_output</code>(병합 스크립트 실제 실행, returncode 0)</td></tr>
+      <tr><td>R-08</td><td>병합 JSON 후처리 정제</td><td><span class="badge b-ok">구현됨</span></td><td>있음</td><td><span class="badge b-ok">통과</span></td>
+        <td>backend <code>4_1_post_process.py</code>. 산출물 <code>results/merged_json_post/*.json</code>(4). 테스트 <code>TestR08::test_post_process_produces_output</code>(실제 실행)</td></tr>
+      <tr><td>R-09</td><td>최종 JSON → Excel(.xlsx) 변환</td><td><span class="badge b-ok">구현됨</span></td><td>있음</td><td><span class="badge b-ok">통과</span></td>
+        <td>backend <code>5_json2table.py</code>. 산출물 <code>results/excel_tables/*.xlsx</code>(4). 테스트 <code>TestR09::test_excel_files_created</code>(실행) + <code>test_excel_has_data_rows</code>(행≥1)</td></tr>
+      <tr><td>R-10</td><td>웹 드래그&드롭/선택 업로드 → file_id</td><td><span class="badge b-ok">구현됨</span></td><td>있음</td><td><span class="badge b-ok">통과</span></td>
+        <td>frontend backend <code>routes/upload.py</code> (<code>@router.post("/upload")</code>, <code>file_id</code>, <code>INVALID_FILE_TYPE</code>) + <code>components/Dropzone.tsx</code>. 라이브 기동 시 <code>/api/upload</code> 등록 확인. 테스트 <code>TestR10</code>(3개)</td></tr>
+      <tr><td>R-11</td><td>업로드 후 첫 슬라이드 미리보기</td><td><span class="badge b-ok">구현됨</span></td><td>있음</td><td><span class="badge b-ok">통과</span></td>
+        <td>frontend <code>routes/preview.py</code> + <code>components/SlidePreview.tsx</code>. <code>/api/preview/{file_id}</code> 등록 확인. 테스트 <code>TestR11</code>(2개)</td></tr>
+      <tr><td>R-12</td><td>Submit→/api/convert→JSON 뷰어 렌더</td><td><span class="badge b-ok">구현됨</span></td><td>있음</td><td><span class="badge b-ok">통과</span></td>
+        <td>frontend <code>routes/convert.py</code> (<code>@router.post("/convert")</code>, <code>result</code>) + <code>components/JsonViewer.tsx</code>·<code>RightPanel.tsx</code>. <code>/api/convert</code> 등록 확인. 테스트 <code>TestR12</code>(4개)</td></tr>
+      <tr><td>R-13</td><td>변환 진행 단계 실시간 텍스트 표시</td><td><span class="badge b-ok">구현됨</span></td><td>있음</td><td><span class="badge b-ok">통과</span></td>
+        <td>frontend <code>hooks/useUpload.ts</code>(<code>uploading/converting/done</code> 상태) + <code>ConversionProgress.tsx</code>·<code>ConverterPage.tsx</code>. 테스트 <code>TestR13</code>(4개). ※ 실제 UI 실시간 체감은 §6 시연 확인 대상</td></tr>
+      <tr><td>R-14</td><td>GitHub Actions CI (compile/pytest/build 검증)</td><td><span class="badge b-ok">구현됨</span></td><td>있음</td><td><span class="badge b-ok">통과</span></td>
+        <td><code>.github/workflows/ci.yml</code> — <code>compileall</code>, <code>pytest tests/program_frontend</code>, <code>frontend-build</code>(<code>npm run build</code>) 정의. 테스트 <code>TestR14</code>(3개). ※ 워크플로 <b>정의</b> 확인, 실제 Actions 실행 로그는 §9 참조</td></tr>
+      <tr><td>R-15</td><td>산출물 품질(구조 일관성·placeholder 해소·Excel 가독성)</td><td><span class="badge b-ok">구현됨</span></td><td>있음</td><td><span class="badge b-ok">통과</span></td>
+        <td><code>merged_json_post/*.json</code> unresolved placeholder 없음 + <code>excel_tables/*.xlsx</code> 컬럼·행≥1. 테스트 <code>TestR15</code>(backend·frontend 양쪽, 실제 산출 파일 대상 실행)</td></tr>
+    </tbody>
+  </table>
+  <p class="note">전 항목 <b>구현됨</b>. "미구현/부분 구현" 없음. R-04~R-06은 요구사항 비고대로 외부 LLM 호출이 필요해 <b>사전 실행 결과 파일</b>을 대상으로 구조를 검증(테스트 설계상 결과 파일 존재·구조 확인).</p>
+</section>
+
+<!-- ============ 4. 테스트 결과 ============ -->
+<section id="s4">
+  <h2><span class="secnum">4.</span> 테스트 결과</h2>
+  <p class="note">정의서 5.2. <b>에이전트가 직접 실행</b>: <code>uv venv --python 3.10</code> + <code>uv pip install -r requirements.txt</code>로 환경 구성 후 RUN.md §5 명령으로 실행. 프로그램별 집계.</p>
+
+  <table>
+    <thead><tr><th>프로그램</th><th>실행 명령</th><th>수집</th><th>결과 (에이전트 직접 실행)</th><th>첨부 결과와 대조</th></tr></thead>
+    <tbody>
+      <tr><td>program_backend</td><td class="mono">pytest tests/program_backend</td><td>16개</td><td><span class="badge b-ok">16 passed</span> <span class="evi">(22.17s)</span></td><td><code>test-results/program_backend/pytest.txt</code> = 16 passed → <b>일치</b></td></tr>
+      <tr><td>program_frontend</td><td class="mono">pytest tests/program_frontend</td><td>18개</td><td><span class="badge b-ok">18 passed</span> <span class="evi">(0.38s)</span></td><td><code>test-results/program_frontend/pytest.txt</code> = 18 passed → <b>일치</b></td></tr>
+      <tr><td><b>합계</b></td><td></td><td><b>34개</b></td><td><span class="badge b-ok">34 passed / 0 failed</span></td><td>첨부 JUnit XML(<code>junit.xml</code>) 및 로그와 동일</td></tr>
+    </tbody>
+  </table>
+
+  <h4>요구사항별 테스트 존재·통과 매핑</h4>
+  <table>
+    <thead><tr><th style="width:60px">요구사항</th><th style="width:90px">테스트</th><th style="width:110px">통과 여부</th><th>대응 테스트 클래스</th></tr></thead>
+    <tbody>
+      <tr><td>R-01·R-02</td><td>있음</td><td><span class="badge b-ok">통과(실행)</span></td><td><code>TestR01_R02_MaskTable</code> (2)</td></tr>
+      <tr><td>R-03</td><td>있음</td><td><span class="badge b-ok">통과(실행)</span></td><td><code>TestR03_ExtractStructure</code> (1)</td></tr>
+      <tr><td>R-04·R-05</td><td>있음</td><td><span class="badge b-ok">통과(첨부결과·구조검증)</span></td><td><code>TestR04_R05_KVExtraction</code> (3)</td></tr>
+      <tr><td>R-06</td><td>있음</td><td><span class="badge b-ok">통과(첨부결과·구조검증)</span></td><td><code>TestR06_NestedTableVQA</code> (2)</td></tr>
+      <tr><td>R-07</td><td>있음</td><td><span class="badge b-ok">통과(실행)</span></td><td><code>TestR07_Merge</code> (2)</td></tr>
+      <tr><td>R-08</td><td>있음</td><td><span class="badge b-ok">통과(실행)</span></td><td><code>TestR08_PostProcess</code> (2)</td></tr>
+      <tr><td>R-09</td><td>있음</td><td><span class="badge b-ok">통과(실행)</span></td><td><code>TestR09_JsonToExcel</code> (2)</td></tr>
+      <tr><td>R-10</td><td>있음</td><td><span class="badge b-ok">통과(실행)</span></td><td><code>TestR10_WebUpload</code> (3)</td></tr>
+      <tr><td>R-11</td><td>있음</td><td><span class="badge b-ok">통과(실행)</span></td><td><code>TestR11_SlidePreview</code> (2)</td></tr>
+      <tr><td>R-12</td><td>있음</td><td><span class="badge b-ok">통과(실행)</span></td><td><code>TestR12_ConvertAndDisplay</code> (4)</td></tr>
+      <tr><td>R-13</td><td>있음</td><td><span class="badge b-ok">통과(실행)</span></td><td><code>TestR13_ProgressText</code> (4)</td></tr>
+      <tr><td>R-14</td><td>있음</td><td><span class="badge b-ok">통과(실행)</span></td><td><code>TestR14_CIPipeline</code> (3)</td></tr>
+      <tr><td>R-15</td><td>있음</td><td><span class="badge b-ok">통과(실행)</span></td><td><code>TestR15_OutputQuality</code> / <code>TestR15_QualitySpec</code> (2+2)</td></tr>
+    </tbody>
+  </table>
+  <p class="note">모든 요구사항(R-01~R-15)에 대응 테스트가 존재하며, 에이전트 실행 기준 34/34 통과. R-04~R-06은 LLM 호출 결과를 매번 재생성하지 않고 제출된 사전 실행 결과 파일의 존재·구조를 검증하는 방식(요구사항 명세서 비고와 일치).</p>
+  <div class="callout">매칭 신호(정의서 5.2): 표준 리포트 포맷(JUnit XML) + <code>src/↔tests/</code> 미러 구조 + <code>test_*</code> 네이밍 + 클래스명 내 요구사항 ID(<code>TestR07_*</code>)로 요구사항↔테스트↔결과를 1:1 추적.</div>
+</section>
+
+<!-- ============ 5. DevOps ============ -->
+<section id="s5">
+  <h2><span class="secnum">5.</span> DevOps · 실행 가능성 (8개 기준)</h2>
+  <p class="note">정의서 5.3·6.1. 프로그램별로 충족/미충족/해당 없음 판정. 기준 7·8은 에이전트가 <b>실제 설치·빌드·기동</b>하여 확인.</p>
+  <table>
+    <thead><tr>
+      <th style="width:38px">#</th><th style="width:230px">기준</th>
+      <th style="width:150px">program_backend</th><th style="width:150px">program_frontend(web)</th><th>근거</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>1</td><td>라이브러리 목록 명시</td><td><span class="badge b-ok">충족</span></td><td><span class="badge b-ok">충족</span></td>
+        <td>backend <code>requirements.txt</code> / web <code>backend/pyproject.toml</code>·<code>frontend/package.json</code></td></tr>
+      <tr><td>2</td><td>라이브러리 버전 고정</td><td><span class="badge b-ok">충족</span></td><td><span class="badge b-ok">충족</span></td>
+        <td>requirements.txt 전 항목 <code>==</code> 고정 / pyproject deps·package.json 고정 버전(<code>fastapi==0.138.2</code>, <code>react 18.3.1</code> 등)</td></tr>
+      <tr><td>3</td><td>빌드·설치 문서화</td><td><span class="badge b-ok">충족</span></td><td><span class="badge b-ok">충족</span></td>
+        <td>RUN.md §2 (<code>bash src/setup_host.sh</code>) / web는 <code>docker-compose.yml</code>·<code>Dockerfile</code>·요구사항 비고(<code>docker compose up</code>)</td></tr>
+      <tr><td>4</td><td>실행·기동 문서화</td><td><span class="badge b-ok">충족</span></td><td><span class="badge b-ok">충족</span></td>
+        <td>RUN.md §6 (<code>bash src/run.sh</code>, 8단계 명시) / 요구사항 비고 <code>docker compose up</code> + compose <code>depends_on</code></td></tr>
+      <tr><td>5</td><td>환경변수·설정 문서화</td><td><span class="badge b-ok">충족</span></td><td><span class="badge b-ok">충족</span></td>
+        <td>RUN.md §3 + <code>sample.env</code> / web <code>backend/.env.example</code>, compose <code>env_file</code>·<code>USE_MOCK_AI</code></td></tr>
+      <tr><td>6</td><td>외부 서비스·자원 안내</td><td><span class="badge b-ok">충족</span></td><td><span class="badge b-ok">충족</span></td>
+        <td>OpenAI / Azure OpenAI API 키 안내(RUN.md §3, sample.env). web mock 모드(<code>USE_MOCK_AI=1</code>)로 키 없이 기동 가능</td></tr>
+      <tr><td>7</td><td>빌드·설치가 문서대로 성공</td><td><span class="badge b-ok">충족(실측)</span></td><td><span class="badge b-ok">충족(실측)</span></td>
+        <td>backend: <code>uv pip install -r requirements.txt</code> 성공 / frontend: <code>npm install</code> + <code>npm run build</code> 성공(<span class="mono">✓ built, dist/ 생성</span>), web backend <code>pip install fastapi/uvicorn…</code> 성공</td></tr>
+      <tr><td>8</td><td>애플리케이션 기동</td><td><span class="badge b-na">확인 불가</span> / 부분</td><td><span class="badge b-ok">충족(실측)</span></td>
+        <td>web: <code>uvicorn app.main:app</code> 기동 → <code>GET /api/health</code> = <span class="mono">{"status":"ok"}</span>, 라우트 <code>/api/upload·/api/convert·/api/preview·/api/excel</code> 등록 확인.<br>backend: 전체 <code>run.sh</code> E2E는 유효 API 키 필요(<code>sample.env</code>는 빈 키) → 확인 불가. 단 비-LLM 단계(mask·extract·merge·post·excel)는 테스트 subprocess에서 <code>returncode 0</code>으로 실제 실행 성공</td></tr>
+    </tbody>
+  </table>
+  <h4>다중 프로그램 연동(6.1)</h4>
+  <ul class="tight">
+    <li><b>연동·실행 순서 문서화</b>: <span class="badge b-ok">충족</span> — <code>docker-compose.yml</code>에 <code>frontend.depends_on: backend(service_healthy)</code> + backend <code>healthcheck</code>(<code>/api/health</code>) 정의로 기동 순서 명시.</li>
+    <li><b>디렉토리 정합성</b>: <span class="badge b-ok">충족</span> — src/tests/test-results 모두 backend·frontend 2개로 정합.</li>
+  </ul>
+  <div class="callout warn">기준 8 backend는 <b>유효 LLM API 키가 제출물에 포함되지 않아</b> 전체 파이프라인 기동을 재현할 수 없습니다(추측 금지 → 확인 불가). 비-LLM 단계의 실제 실행 성공과 사전 실행 결과물(<code>results/</code>)은 확인되었으므로, 최종 동작은 §6 시연영상으로 평가자가 확인 권장.</div>
+</section>
+
+<!-- ============ 6. 시연 확인표 ============ -->
+<section id="s6">
+  <h2><span class="secnum">6.</span> 시연 확인표 <span class="evi">(결과란은 평가자가 영상 시청 후 기입)</span></h2>
+  <p class="note">정의서 5.4. 에이전트는 영상을 직접 판정하지 않습니다. 요구사항 명세서에 교육생이 제공한 타임스탬프를 그대로 정리했습니다. 대상 영상: <code>LG_부트캠프_13기_C반_시연영상(2팀).mp4</code>.</p>
+  <table>
+    <thead><tr>
+      <th style="width:60px">ID</th><th style="width:110px">타임스탬프</th><th style="width:110px">제공 여부</th>
+      <th>확인 항목</th><th style="width:150px">실제 동작(평가자 기입)</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>R-01</td><td>00:05</td><td><span class="badge b-ok">있음</span></td><td>raw 폴더 PPTX 인식·처리</td><td>&nbsp;</td></tr>
+      <tr><td>R-02</td><td>00:15</td><td><span class="badge b-ok">있음</span></td><td>복잡 표 마스킹 pptx 생성</td><td>&nbsp;</td></tr>
+      <tr><td>R-03</td><td>00:30</td><td><span class="badge b-ok">있음</span></td><td>구조 JSON 추출</td><td>&nbsp;</td></tr>
+      <tr><td>R-04</td><td>00:50</td><td><span class="badge b-ok">있음</span></td><td>LLM key-value 추출</td><td>&nbsp;</td></tr>
+      <tr><td>R-05</td><td>01:15</td><td><span class="badge b-ok">있음</span></td><td>self-refine 반복</td><td>&nbsp;</td></tr>
+      <tr><td>R-06</td><td>01:55</td><td><span class="badge b-ok">있음</span></td><td>nested 표 계층 JSON</td><td>&nbsp;</td></tr>
+      <tr><td>R-07</td><td>02:12</td><td><span class="badge b-ok">있음</span></td><td>통합 병합 JSON</td><td>&nbsp;</td></tr>
+      <tr><td>R-08</td><td>02:32</td><td><span class="badge b-ok">있음</span></td><td>후처리 정제 JSON</td><td>&nbsp;</td></tr>
+      <tr><td>R-09</td><td>02:45</td><td><span class="badge b-ok">있음</span></td><td>Excel 변환</td><td>&nbsp;</td></tr>
+      <tr><td>R-10</td><td>03:11</td><td><span class="badge b-ok">있음</span></td><td>웹 업로드(드래그&드롭/선택)</td><td>&nbsp;</td></tr>
+      <tr><td>R-11</td><td>03:17</td><td><span class="badge b-ok">있음</span></td><td>첫 슬라이드 미리보기</td><td>&nbsp;</td></tr>
+      <tr><td>R-12</td><td>03:18</td><td><span class="badge b-ok">있음</span></td><td>Submit→변환→JSON 표시</td><td>&nbsp;</td></tr>
+      <tr><td>R-13</td><td>03:18</td><td><span class="badge b-ok">있음</span></td><td>진행 단계 실시간 표시</td><td>&nbsp;</td></tr>
+      <tr><td>R-14</td><td>N/A (CI 로그로 검증)</td><td><span class="badge b-na">N/A</span></td><td>영상 시연 대상 아님(CI/CD)</td><td><span class="evi">해당 없음</span></td></tr>
+      <tr><td>R-15</td><td>N/A (테스트 로그로 검증)</td><td><span class="badge b-na">N/A</span></td><td>영상 시연 대상 아님(품질)</td><td><span class="evi">해당 없음</span></td></tr>
+    </tbody>
+  </table>
+  <p class="note">R-01~R-13은 타임스탬프 <b>있음</b>. R-14·R-15는 <code>N/A(사유)</code> = 영상 시연 대상 아님(미입증과 구분). 실제 동작 여부는 평가자가 영상을 보고 마지막 열에 기입하세요.</p>
+</section>
+
+<!-- ============ 7. Git 협업 ============ -->
+<section id="s7">
+  <h2><span class="secnum">7.</span> Git 협업 지표 <span class="evi">(팀 단위 · 사실 보고)</span></h2>
+  <p class="note">정의서 5.5. 근거: 제출된 <code>git_log.txt</code> (총 33 커밋). 점수화하지 않고 객관적 신호로 보고. 저장소(<code>.git</code>) 원본이 아닌 로그 텍스트이므로 작성자 이메일 부재 → 동일인 별칭은 이름·브랜치 유사성 기반 추정임을 명시.</p>
+
+  <h4>기여 분산도</h4>
+  <table>
+    <thead><tr><th>기여자(추정 통합)</th><th>커밋 수</th><th>비중</th><th>로그상 원문 작성자명</th></tr></thead>
+    <tbody>
+      <tr><td>dongwook (권동욱)</td><td>15</td><td>45%</td><td><code>dongwook.kwon</code>(13) + <code>kdd0ng</code>(2)</td></tr>
+      <tr><td>hyunseo (김현서)</td><td>11</td><td>33%</td><td><code>hyunseo318</code>(9) + <code>Hyunseo Kim</code>(2)</td></tr>
+      <tr><td>wonil (최원일)</td><td>7</td><td>21%</td><td><code>최원일</code>(4) + <code>Wonil</code>(3)</td></tr>
+      <tr><td><b>합계</b></td><td><b>33</b></td><td>100%</td><td>3명(별칭 통합 기준)</td></tr>
+    </tbody>
+  </table>
+  <p class="note">최다 기여자 비중 45%로 특정 1인 독점(예: 80%+) 신호는 없음. 3명 모두 다수 커밋 보유.
+  ※ 브랜치 네임스페이스 <code>junseok1063/*</code>가 PR 출처에 나타나나(저장소 호스트 계정 추정) 해당 이름의 커밋 작성 기록은 없어, 4번째 팀원 존재 여부는 <span class="badge b-na">확인 불가</span>.</p>
+
+  <h4>커밋 지속성</h4>
+  <ul class="tight">
+    <li>로그 기간: 최초 <code>a55feaa Initial commit</code>(약 8일 전) ~ 최신 <code>550199c</code>(약 27분 전, 기준 2026-07-01).</li>
+    <li>상대 시점 분포: 8·7·6·2일 전 및 30·15·13·8시간 전 등 <b>여러 날에 걸쳐 분산</b> — 마감 직전 단일 몰림 패턴은 아님. 다만 최근 하루(13h~27min)에 정리성 커밋이 다소 집중.</li>
+    <li>명세서 기준 "2주 지속" 대비 관측 활동 구간은 약 8일. (git_log.txt 상대시각 기반, 절대 일자 없음)</li>
+  </ul>
+
+  <h4>협업 상호작용</h4>
+  <ul class="tight">
+    <li>Merge PR 5건: <code>#1 kdw</code>(kdd0ng), <code>#2 feat/ppt2json</code>(Wonil), <code>#3 khs</code>(Hyunseo), <code>#4 kdw</code>(kdd0ng), <code>#5 feat/ppt2json</code>(Wonil) → <b>PR 기반 브랜치 병합 워크플로 존재</b>.</li>
+    <li>기능 브랜치명(<code>khs</code>, <code>kdw</code>, <code>feat/ppt2json</code>)으로 역할 분리 개발 정황 확인.</li>
+  </ul>
+  <div class="callout"><b>요약 의견(근거 기반, 최종 판단은 평가자)</b>: 3인 기여 분산(45/33/21%), 8일간 다일 분산 커밋, PR 5건 머지 — <b>협업 방식으로 운영된 신호가 뚜렷</b>합니다. 단, ① 로그 텍스트라 이메일 기반 신원 확정 불가, ② 2주 목표 대비 관측 구간 약 8일, ③ junseok1063 계정의 팀원 여부 불명 — 이 세 가지는 확인 불가로 남겨 평가자 판단에 위임합니다.</div>
+</section>
+
+<!-- ============ 8. 비기능 강사 평가 폼 ============ -->
+<section id="s8">
+  <h2><span class="secnum">8.</span> 요구사항 중 비기능 요소 — 강사 평가 폼</h2>
+  <p class="note">정의서 5.6·8장. 명세서는 기능/비기능 미분리이므로 에이전트가 비기능 요소를 식별·추출했습니다. <b>충족 여부의 최종 판정은 평가자(강사)</b>가 하며, 아래 "참고 사실"은 에이전트가 수집한 객관 자료입니다. 점수·코멘트란은 빈칸으로 둡니다.</p>
+
+  <div class="scoreform">
+    <h3>1. 처리 성능 / 응답 속도 (성능)</h3>
+    <blockquote>출처 요구사항: R-01 비고 "실행 환경(API 응답 속도)에 따라 ±5초 오차" · R-13 "변환 진행 단계 실시간 표시"</blockquote>
+    <blockquote>에이전트 수집 참고 사실: backend 테스트 16개 22.17s 내 완료(비-LLM 파이프라인 단계 subprocess 실행 포함). 실제 LLM 변환 응답 시간은 API 의존으로 미측정. <code>NUM_WORKERS=8</code> 병렬 처리 옵션 존재(<code>sample.env</code>).</blockquote>
+    <table><thead><tr><th>세부 평가 기준</th><th style="width:90px">점수(1-5)</th><th>코멘트</th></tr></thead>
+    <tbody>
+      <tr><td>실사용 시나리오에서 변환 체감 성능이 적정한가</td><td><span class="blank">&nbsp;</span></td><td>&nbsp;</td></tr>
+      <tr><td>진행 상태 피드백이 사용자 대기 체감을 적절히 완화하는가</td><td><span class="blank">&nbsp;</span></td><td>&nbsp;</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="scoreform">
+    <h3>2. 신뢰성 / 산출물 품질 (신뢰성)</h3>
+    <blockquote>출처 요구사항: R-05 "LLM self-refine 품질 개선" · R-15 "JSON 구조 일관성·placeholder 해소·Excel 가독성"</blockquote>
+    <blockquote>에이전트 수집 참고 사실: <code>TestR15</code>(backend·frontend) 통과 — <code>merged_json_post/*.json</code> unresolved placeholder 없음, <code>excel_tables/*.xlsx</code> 컬럼·유효행 ≥1 확인(에이전트 직접 실행). self-refine <code>iter1~3</code> 산출물 존재.</blockquote>
+    <table><thead><tr><th>세부 평가 기준</th><th style="width:90px">점수(1-5)</th><th>코멘트</th></tr></thead>
+    <tbody>
+      <tr><td>변환 결과물의 정확도·일관성이 실무 활용 수준인가</td><td><span class="blank">&nbsp;</span></td><td>&nbsp;</td></tr>
+      <tr><td>self-refine이 품질 개선에 실질적으로 기여하는가</td><td><span class="blank">&nbsp;</span></td><td>&nbsp;</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="scoreform">
+    <h3>3. 사용성 (Usability)</h3>
+    <blockquote>출처 요구사항: R-10 "드래그&드롭/파일선택 업로드" · R-11 "슬라이드 미리보기" · R-13 "진행 상태 실시간 표시"</blockquote>
+    <blockquote>에이전트 수집 참고 사실: <code>Dropzone.tsx</code>·<code>SlidePreview.tsx</code>·<code>JsonViewer.tsx</code>·<code>ConversionProgress.tsx</code> 컴포넌트 존재, 관련 테스트 통과. web 라이브 기동 시 UI 라우트 정상 등록.</blockquote>
+    <table><thead><tr><th>세부 평가 기준</th><th style="width:90px">점수(1-5)</th><th>코멘트</th></tr></thead>
+    <tbody>
+      <tr><td>업로드→변환→결과 확인 흐름이 직관적인가</td><td><span class="blank">&nbsp;</span></td><td>&nbsp;</td></tr>
+      <tr><td>미리보기·결과 뷰어가 이해를 돕는가</td><td><span class="blank">&nbsp;</span></td><td>&nbsp;</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="scoreform">
+    <h3>4. 유지보수성 (Maintainability)</h3>
+    <blockquote>출처 요구사항: R-14 "CI 파이프라인이 코드 정합성·프론트 빌드 자동 검증"</blockquote>
+    <blockquote>에이전트 수집 참고 사실: <code>.github/workflows/ci.yml</code>(compileall·pytest·build) 정의, 요구사항 기반 테스트 34개 존재, src-layout 프로그램 분리, 의존성 버전 고정. RUN.md 재현 문서 제공.</blockquote>
+    <table><thead><tr><th>세부 평가 기준</th><th style="width:90px">점수(1-5)</th><th>코멘트</th></tr></thead>
+    <tbody>
+      <tr><td>코드 구조·문서가 후속 유지보수에 적합한가</td><td><span class="blank">&nbsp;</span></td><td>&nbsp;</td></tr>
+      <tr><td>테스트·CI가 회귀 방지에 충분한 범위인가</td><td><span class="blank">&nbsp;</span></td><td>&nbsp;</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="scoreform">
+    <h3>5. 보안 (Security)</h3>
+    <blockquote>출처 요구사항: R-10 "업로드 파일 검증"(파생) · 명세서 비고/설정 파일의 비밀정보 처리(파생)</blockquote>
+    <blockquote>에이전트 수집 참고 사실: <code>upload.py</code> 확장자 화이트리스트 + <code>INVALID_FILE_TYPE</code> 거부 로직(테스트 통과), <code>.gitignore</code>·<code>.dockerignore</code>가 <code>.env</code> 제외, 실제 키 대신 <code>sample.env</code> 제출(빈 값), 업로드 크기 제한 <code>MAX_UPLOAD_BYTES</code> 설정.</blockquote>
+    <table><thead><tr><th>세부 평가 기준</th><th style="width:90px">점수(1-5)</th><th>코멘트</th></tr></thead>
+    <tbody>
+      <tr><td>입력 검증·비밀정보 관리가 적절한가</td><td><span class="blank">&nbsp;</span></td><td>&nbsp;</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="scoreform">
+    <h3>6. 확장성 (Scalability)</h3>
+    <blockquote>출처 요구사항: R-01~R-09 배치 파이프라인 다중 파일 처리(파생) · R-04 대량 슬라이드 처리(파생)</blockquote>
+    <blockquote>에이전트 수집 참고 사실: <code>NUM_WORKERS</code> 병렬 워커 옵션, program_backend/frontend 분리 아키텍처, docker-compose 서비스 분리, 입력 4개 보고서 배치 처리 결과물 존재.</blockquote>
+    <table><thead><tr><th>세부 평가 기준</th><th style="width:90px">점수(1-5)</th><th>코멘트</th></tr></thead>
+    <tbody>
+      <tr><td>처리량 증가·기능 확장에 구조적으로 대응 가능한가</td><td><span class="blank">&nbsp;</span></td><td>&nbsp;</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="scoreform">
+    <h3>7. 호환성 (Compatibility)</h3>
+    <blockquote>출처 요구사항: RUN.md 환경 구성(파생) · 다중 LLM 제공자 지원(파생)</blockquote>
+    <blockquote>에이전트 수집 참고 사실: OpenAI 및 Azure OpenAI 양쪽 설정 예시 제공(RUN.md §3, sample.env), Python 3.10+ 명시, docker 기반 이식성, <code>USE_MOCK_AI</code>로 키 없는 환경 지원.</blockquote>
+    <table><thead><tr><th>세부 평가 기준</th><th style="width:90px">점수(1-5)</th><th>코멘트</th></tr></thead>
+    <tbody>
+      <tr><td>다양한 실행 환경·LLM 제공자에서 재현 가능한가</td><td><span class="blank">&nbsp;</span></td><td>&nbsp;</td></tr>
+    </tbody></table>
+  </div>
+
+  <p class="note">※ <b>접근성(Accessibility)</b>은 명세서에서 관련 요구사항이 식별되지 않아 평가 폼을 생성하지 않았습니다(해당 없음). 위 폼은 이 프로젝트에 맞게 동적 생성된 항목으로, 고정 <code>평가자-체크리스트.md</code>와는 별개입니다.</p>
+</section>
+
+<!-- ============ 9. 확인 불가 / 한계 ============ -->
+<section id="s9">
+  <h2><span class="secnum">9.</span> 확인 불가 / 한계 항목</h2>
+  <p class="note">정의서 3장·8장. 자동 검증이 불가능했던 부분과 이유. 추측 없이 사실만 기록.</p>
+  <table>
+    <thead><tr><th style="width:230px">항목</th><th style="width:120px">상태</th><th>이유 / 근거</th></tr></thead>
+    <tbody>
+      <tr><td>백엔드 전체 파이프라인(run.sh) LLM E2E 기동</td><td><span class="badge b-na">확인 불가</span></td>
+        <td>유효 OpenAI/Azure API 키가 제출물에 없음(<code>sample.env</code>는 빈 값). 비-LLM 단계는 테스트에서 실제 실행 성공, 사전 실행 결과물(<code>results/</code>)은 존재. 실제 LLM 동작은 시연영상으로 평가자 확인 권장.</td></tr>
+      <tr><td>GitHub Actions CI 실제 실행 로그</td><td><span class="badge b-na">확인 불가</span></td>
+        <td><code>ci.yml</code> 정의는 확인(테스트 통과)했으나, 실제 Actions 실행 결과 로그(성공/실패 배지·run URL)는 제출물에 미포함. R-14 검증 기준의 "main/PR 실행" 자체는 로그 부재로 미확인. 단 에이전트가 CI가 수행하는 <code>npm run build</code>·<code>pytest tests/program_frontend</code>를 로컬 재현하여 성공.</td></tr>
+      <tr><td>시연영상 실제 동작 판정</td><td><span class="badge b-info">평가자 위임</span></td>
+        <td>정의서 5.4에 따라 에이전트는 영상을 직접 판정하지 않음. §6 타임스탬프 확인표 제공, 결과는 평가자 기입.</td></tr>
+      <tr><td>Git 신원·정확한 팀 인원</td><td><span class="badge b-na">확인 불가</span></td>
+        <td><code>.git</code> 저장소가 아닌 <code>git_log.txt</code> 텍스트 제출 → 작성자 이메일 부재로 별칭 통합은 이름/브랜치 유사성 기반 추정. <code>junseok1063</code> 계정의 커밋 작성 기록 없어 4번째 팀원 여부 불명.</td></tr>
+      <tr><td>docker compose 통합 기동(frontend+backend 동시)</td><td><span class="badge b-na">부분 확인</span></td>
+        <td>각 구성요소(frontend 빌드, web backend uvicorn 기동)는 개별 실측 성공. compose 통합 오케스트레이션 전체 실행은 미수행(백엔드 컨테이너의 LLM 키·이미지 빌드 시간 고려). 연동 순서는 <code>depends_on</code>+<code>healthcheck</code>로 문서화 확인.</td></tr>
+      <tr><td>LLM 추출 결과의 정확도·난이도·창의성</td><td><span class="badge b-info">판단 안 함</span></td>
+        <td>정의서 3장·8장에 따라 주관 항목은 판단하지 않음. R-04~R-06은 결과 파일의 존재·구조만 검증.</td></tr>
+      <tr><td>결과보고서·포스터·시연영상 내용 품질</td><td><span class="badge b-info">판단 안 함</span></td>
+        <td>문서/영상 내용의 완성도·전달력은 주관 평가 영역(평가자-체크리스트). 에이전트는 파일 존재·형식만 점검(§2).</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<footer>
+  생성: 프로젝트 평가 Agent · 기준 <code>project_assessment_agent_v1.0.md</code> · 분석 일시 2026-07-01<br>
+  모든 자동 판정에는 파일경로·테스트명·실행로그·커밋 근거를 첨부했습니다. 주관·비기능 최종 판정은 평가자에게 위임합니다.
+</footer>
+
+</div>
+</body>
+</html>
